@@ -329,6 +329,7 @@ cpufreq_verify_within_cpu_limits(struct cpufreq_policy *policy)
 
 #define CPUFREQ_TRANSITION_NOTIFIER	(0)
 #define CPUFREQ_POLICY_NOTIFIER		(1)
+#define CPUFREQ_GOVINFO_NOTIFIER	(2)
 
 /* Transition notifiers */
 #define CPUFREQ_PRECHANGE		(0)
@@ -351,6 +352,9 @@ int cpufreq_unregister_notifier(struct notifier_block *nb, unsigned int list);
 
 void cpufreq_notify_transition(struct cpufreq_policy *policy,
 		struct cpufreq_freqs *freqs, unsigned int state);
+
+void cpufreq_notify_utilization(struct cpufreq_policy *policy,
+		unsigned int load);
 
 #else /* CONFIG_CPU_FREQ */
 static inline int cpufreq_register_notifier(struct notifier_block *nb,
@@ -393,6 +397,20 @@ static inline unsigned long cpufreq_scale(unsigned long old, u_int div,
 /*********************************************************************
  *                          CPUFREQ GOVERNORS                        *
  *********************************************************************/
+
+/* Govinfo Notifiers */
+#define CPUFREQ_LOAD_CHANGE		(0)
+
+/*
+ * Governor specific info that can be passed to modules that subscribe
+ * to CPUFREQ_GOVINFO_NOTIFIER
+ */
+struct cpufreq_govinfo {
+	unsigned int cpu;
+	unsigned int load;
+	unsigned int sampling_rate_us;
+};
+extern struct atomic_notifier_head cpufreq_govinfo_notifier_list;
 
 /*
  * If (cpufreq_driver->target) exists, the ->governor decides what frequency
