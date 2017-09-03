@@ -88,8 +88,8 @@ static struct nightmare_tuners {
 	.freq_for_responsiveness = 1728000,
 	.freq_for_responsiveness_max = 2265600,
 #else
-	.freq_for_responsiveness = 1566000,
-	.freq_for_responsiveness_max = 1890000,
+	.freq_for_responsiveness = 1574400,
+	.freq_for_responsiveness_max = 1958400,
 #endif
 	.freq_step_at_min_freq = 40,
 	.freq_step = 50,
@@ -537,7 +537,7 @@ static void nightmare_check_cpu(struct cpufreq_nightmare_cpuinfo *this_nightmare
 			max_load = load;
 	}
 
-	// WJH cpufreq_notify_utilization(policy, max_load);
+	cpufreq_notify_utilization(policy, max_load);
 
 	/* CPUs Online Scale Frequency*/
 	if (policy->cur < freq_for_responsiveness) {
