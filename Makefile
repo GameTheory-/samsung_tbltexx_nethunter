@@ -352,11 +352,17 @@ endif
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-CFLAGS_MODULE   =
-AFLAGS_MODULE   =
+GAMETHEORY	= -marm -mfpu=neon-vfpv4 -ffast-math \
+	-fsingle-precision-constant -fgcse-lm \
+	-fgcse-sm -fsched-spec-load -fforce-addr \
+	-fgraphite -fgraphite-identity -floop-flatten \
+	-ftree-loop-linear -floop-interchange \
+	-floop-strip-mine -floop-block -floop-nest-optimize
+CFLAGS_MODULE   = $(GAMETHEORY)
+AFLAGS_MODULE   = $(GAMETHEORY)
 LDFLAGS_MODULE  = --strip-debug
-CFLAGS_KERNEL	=
-AFLAGS_KERNEL	=
+CFLAGS_KERNEL	= $(GAMETHEORY)
+AFLAGS_KERNEL	= $(GAMETHEORY)
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
