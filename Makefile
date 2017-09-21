@@ -385,9 +385,12 @@ LINUXINCLUDE    := \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
+GAMETHEORYx	= -Wno-unused-value -Wno-sequence-point -Wno-return-type \
+			-Wno-implicit-function-declaration
+
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
-		   -Werror-implicit-function-declaration \
+		   $(GAMETHEORYx) \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks
 KBUILD_AFLAGS_KERNEL :=
